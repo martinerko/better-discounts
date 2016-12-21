@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Discount from './Discount';
 
-export default class App extends Component {
+export default class BestDiscounts extends Component {
   static propTypes = {
     loadBestDiscounts: PropTypes.func,
     bestDiscounts: PropTypes.array,

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Header from '../components/Header.js';
+import Header from '../components/Header';
 
 function mapStateToProps({ users }) {
   const { loading, location, error } = users;

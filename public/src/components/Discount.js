@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-export default class App extends Component {
+export default class Discount extends Component {
   static propTypes = {
     detail: PropTypes.object.isRequired
   };

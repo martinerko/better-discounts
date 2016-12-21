@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { loadBestDiscounts, loadBestDiscountsSuccess, loadBestDiscountsFailure } from '../actions/discounts';
 
 // load dump component
-import BestDiscounts from '../components/BestDiscounts.js';
+import BestDiscounts from '../components/BestDiscounts';
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadBestDiscounts: () => {
-      // resolve user location from public API
+      // load top discounts to display
       dispatch(loadBestDiscounts())
         .then((response) => {
           if (!response.error) {

@@ -25,7 +25,7 @@ export default class Header extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default navbar-static-top">
+      <nav className="navbar navbar-default navbar-static-top" style={{ backgroundColor: 'grey' }}>
 				<div id="navbar" className="navbar-collapse collapse">
 					{this.renderLocationDetails()}
 				</div>
