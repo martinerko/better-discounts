@@ -18,7 +18,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(express.static(STATIC_PATH));
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, STATIC_PATH, 'index.html'));
 });
 
