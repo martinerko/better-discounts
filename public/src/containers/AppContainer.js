@@ -7,40 +7,40 @@ import { authenticateUser, authenticateUserSuccess, authenticateUserFailure } fr
 import App from '../components/App';
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    authenticateUser: () => {
+	return {
+		authenticateUser: () => {
 			// check whether user is authenticated
-      dispatch(authenticateUser())
-        .then((response) => {
-          if (!response.error) {
-            dispatch(authenticateUserSuccess(response.payload));
-          } else {
-            dispatch(authenticateUserFailure(response.payload));
-          }
-        });
-    },
+			dispatch(authenticateUser())
+				.then((response) => {
+					if (!response.error) {
+						dispatch(authenticateUserSuccess(response.payload));
+					} else {
+						dispatch(authenticateUserFailure(response.payload));
+					}
+				});
+		},
 
-    loadUserLocation: () => {
-      // resolve user location from public API
-      dispatch(loadUserLocation())
-        .then((response) => {
-          if (!response.error) {
-            dispatch(loadUserLocationSuccess(response.payload));
-          } else {
-            dispatch(loadUserLocationFailure(response.payload));
-          }
-        });
-    }
-  };
+		loadUserLocation: () => {
+			// resolve user location from public API
+			dispatch(loadUserLocation())
+				.then((response) => {
+					if (!response.error) {
+						dispatch(loadUserLocationSuccess(response.payload));
+					} else {
+						dispatch(loadUserLocationFailure(response.payload));
+					}
+				});
+		}
+	};
 };
 
 function mapStateToProps(state, ownProps) {
-  const { filter } = state;
+	const {filter} = state;
 
-  return {
-    seoTokens: [],
-    filter
-  };
+	return {
+		seoTokens: [],
+		filter
+	};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

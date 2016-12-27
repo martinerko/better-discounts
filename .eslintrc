@@ -21,10 +21,11 @@
 		"__COVERAGE__": false
 	},
 	"rules": {
+		"indent": [2, "tab", { "SwitchCase": 1 }],
 		"key-spacing": 0,
 		"no-tabs": 0,
 		"max-len": [2, 120, 2],
-		"object-curly-spacing": [2, "always"],
+		//"object-curly-spacing": [2, "always"],
 		"semi": [2, "always"],
 		"space-before-function-paren": 0,
 		"jsx-quotes": ["error", "prefer-double"],

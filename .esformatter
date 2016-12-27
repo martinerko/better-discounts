@@ -1,0 +1,28 @@
+{
+	"plugins": [
+		"esformatter-jsx"
+	],
+
+	"jsx": {
+		// whether to recursively format jsx expressions with esformatter
+		"formatJSXExpressions": true,
+		// By default ObjectExpression and ArrayExpression in JSXExpressions are inlined,
+		// if false, the Expression might expand several lines
+		"JSXExpressionsSingleLine": true,
+		// by default is true if set to false it works the same as esformatter-jsx-ignore
+		"formatJSX": true,
+		"spaceInJSXExpressionContainers": "",
+		"htmlOptions": { // same as the ones passed to js-beautifier.html
+			"brace_style": "collapse",
+			"indent_char": "\t",
+			"indent_size": 1,
+			"max_preserve_newlines": 2,
+			"preserve_newlines": true
+			//wrap_line_length: 250
+		}
+	},
+
+  "indent": {
+    "value": "\t"
+  }
+}

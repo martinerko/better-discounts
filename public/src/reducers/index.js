@@ -8,12 +8,12 @@ import authenticationReducer from './authentication';
 import { routerReducer as routing } from 'react-router-redux';
 
 const rootReducer = combineReducers({
-  users: usersReducer,
-  discounts: discountsReducer,
-  categories: categoriesReducer,
-  personalized: personalizedReducer,
-  authentication: authenticationReducer,
-  routing
+	users: usersReducer,
+	discounts: discountsReducer,
+	categories: categoriesReducer,
+	personalized: personalizedReducer,
+	authentication: authenticationReducer,
+	routing
 // somFe additional reducers
 });
 
