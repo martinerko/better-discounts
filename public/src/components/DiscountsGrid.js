@@ -3,26 +3,32 @@ import Discount from './Discount';
 
 export default class BestDiscounts extends Component {
   static propTypes = {
-    loadBestDiscounts: PropTypes.func,
-    bestDiscounts: PropTypes.array,
+    loadDiscounts: PropTypes.func,
+    data: PropTypes.array,
     loading: PropTypes.bool,
     error: PropTypes.object
   };
 
   componentWillMount() {
-    this.props.loadBestDiscounts();
+    this.props.loadDiscounts();
   }
 
   renderDetail() {
-    const { loading, error, bestDiscounts } = this.props;
+    const { loading, error, data } = this.props;
     if (loading) {
       return 'Loading';
     } else if (error) {
       return <div style={{ color: 'red' }}>{ error.message }</div>;
-    } else if (bestDiscounts) {
-      return bestDiscounts.map((discount, i) => <Discount key={i} detail={discount} />);
+    } else if (data) {
+      return data.map((discount, i) => {
+        return (
+					<div className="col-sm-4 col-lg-4 col-md-4" key={discount.code + '_' + i}>
+						<Discount detail={discount} />
+					</div>
+        );
+      });
     } else {
-      return (<div>Unknown bestDiscounts</div>);
+      return (<div>No data</div>);
     }
   }
 
@@ -44,9 +50,9 @@ export default class BestDiscounts extends Component {
 
   render() {
     return (
-      <div>
-        {this.renderDetail()}
-      </div>
-      );
+			<div className="row">
+      { this.renderDetail() }
+			</div>
+    );
   }
 }

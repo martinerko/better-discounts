@@ -34,4 +34,13 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+function mapStateToProps(state, ownProps) {
+  const { filter } = state;
+
+  return {
+    seoTokens: [],
+    filter
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

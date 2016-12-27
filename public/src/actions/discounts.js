@@ -6,7 +6,7 @@ export const LOAD_BEST_DISCOUNTS_FAILURE = 'LOAD_BEST_DISCOUNTS_FAILURE';
 
 export function loadBestDiscounts() {
   const svc = 'http://localhost:3333/api/discounts';
-  const columns = 'percentage,m,n,p1,category_seo_token,t,p';
+  const columns = 'percentage,m,n,p1,category_seo_token,t,p,s';
 
   const request = axios({
     method: 'get',

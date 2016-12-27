@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 
 export default class Discount extends Component {
   static propTypes = {
@@ -7,19 +6,20 @@ export default class Discount extends Component {
   };
 
   render() {
-    const { percentage, manufacturer, name, price, code, thumbnail } = this.props.detail;
+    const { percentage, manufacturer, name, priceNew, code, thumbnail, link } = this.props.detail;
 
     return (
-      <figure className="grid-figure">
-				<div className="grid-discount-wrap">
-					<Link to={`/discount/${code}`}>
-						<img src={thumbnail} alt={`${manufacturer} - ${name}`} className="grid-discount" />
-					</Link>
+      <div className="thumbnail">
+				<a href={link} target="_blank">
+					<img src={thumbnail} alt={manufacturer + ' - ' + name} />
+				</a>
+				<div className="caption">
+						<h4 className="pull-right">${ priceNew } (-{ percentage }%)</h4>
+						<h4><a href={link} target="_blank">{ name }</a>
+						</h4>
+						<small>{ manufacturer } { code }</small>
 				</div>
-				<figurecaption>
-					<p>{ name }</p>
-					<small>{ manufacturer }</small>
-				</figurecaption>
-			</figure>);
+			</div>
+    );
   }
 }

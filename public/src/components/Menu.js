@@ -4,7 +4,10 @@ import PersonalizedCategoryTree from '../containers/PersonalizedCategoryTree';
 
 export default class App extends Component {
   static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    level1: PropTypes.string,
+		level2: PropTypes.string,
+		level3: PropTypes.string
   };
 
   renderCategoryTree() {
@@ -18,14 +21,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default" style={{
-        backgroundColor: 'yellow'
-      }}>
-				<div id="navbar" className="">
-					{this.renderCategoryTree()}
-					{this.renderPersonalizedCategoryTree()}
-				</div>
-			</nav>
+			<div className="collapse navbar-collapse navbar-ex1-collapse">
+				{ this.renderCategoryTree() }
+			</div>
     );
   }
 }

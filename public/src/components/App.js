@@ -4,7 +4,8 @@ export default class App extends Component {
   static propTypes = {
     authenticateUser: PropTypes.func.isRequired,
     loadUserLocation: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    filter: PropTypes.string
   };
 
   componentWillMount() {
@@ -14,7 +15,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         { this.props.children }
       </div>
     );

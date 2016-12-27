@@ -2,10 +2,6 @@ import CategoryTree from './CategoryTree';
 import React from 'react';
 
 export default class PersonalizedCategoryTree extends CategoryTree {
-  componentWillMount() {
-    this.props.loadCategories();
-  }
-
   renderDetail() {
     const { loading, error, categoryTree } = this.props;
     if (loading) {
