@@ -3,14 +3,27 @@ import Discount from './Discount';
 
 export default class BestDiscounts extends Component {
 	static propTypes = {
+		categoryPath: PropTypes.array,
 		loadDiscounts: PropTypes.func,
 		data: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.object
 	};
 
+	loadData() {
+		const {categoryPath, loadDiscounts} = this.props;
+		loadDiscounts(categoryPath);
+	}
+
 	componentWillMount() {
-		this.props.loadDiscounts();
+		this.loadData();
+	}
+
+	componentDidUpdate(prevProps) {
+		// make sure to reload categories when the url has changed
+		if (this.props.categoryPath !== prevProps.categoryPath) {
+			this.loadData();
+		}
 	}
 
 	renderDetail() {
@@ -22,33 +35,21 @@ export default class BestDiscounts extends Component {
 											{error.message}
 										</div>;
 		} else if (data) {
-			return data.map((discount, i) => {
-				return (
-					<div className="col-sm-4 col-lg-4 col-md-4" key={discount.code + '_' + i}>
-						<Discount detail={discount} />
-					</div>
-					);
-			});
+			return this.renderDiscounts();
 		} else {
 			return (<div>No data</div>);
 		}
 	}
 
-	// render() {
-	// 	const { post } = this.props;
-	//
-	// 	return (
-	// 		<figure className="grid-figure">
-	// 			<div className="grid-discount-wrap">
-	// 				<Link to={`/discount/${post.code}`}>
-	// 					<img src={post.display_src} alt={post.caption} className="grid-discount" />
-	// 				</Link>
-	// 			</div>
-	// 			<figurecaption>
-	// 				<p>{post.caption}</p>
-	// 			</figurecaption>
-	// 		</figure>);
-	// }
+	renderDiscounts() {
+		return this.props.data.map((discount, i) => {
+			return (
+				<div className="col-sm-4 col-lg-4 col-md-4" key={discount.code + '_' + i}>
+					<Discount detail={discount} />
+				</div>
+				);
+		});
+	}
 
 	render() {
 		return (

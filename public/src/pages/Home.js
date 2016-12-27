@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BestDiscounts from '../containers/BestDiscountsContainer';
+import DiscountsGridContainer from '../containers/DiscountsGridContainer';
 
 export default class Home extends Component {
 
@@ -7,7 +7,7 @@ export default class Home extends Component {
 		return (
 			<div>
 				<h2>Today's best discounts</h2>
-				<BestDiscounts />
+				<DiscountsGridContainer categoryPath={[]} />
 			</div>
 			);
 	}

@@ -1,4 +1,4 @@
-import { LOAD_BEST_DISCOUNTS, LOAD_BEST_DISCOUNTS_SUCCESS, LOAD_BEST_DISCOUNTS_FAILURE } from '../actions/discounts';
+import { LOAD_DISCOUNTS, LOAD_DISCOUNTS_SUCCESS, LOAD_DISCOUNTS_FAILURE } from '../actions/discounts';
 
 const INITIAL_STATE = {
 	data: null,
@@ -22,21 +22,21 @@ function transformDiscountData({p: code, m: manufacturer, n: name, percentage, p
 export default function(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		// loading best discounts from external service
-		case LOAD_BEST_DISCOUNTS:
+		case LOAD_DISCOUNTS:
 			return {
 				...state,
 				data: null,
 				error: null,
 				loading: true
 			};
-		case LOAD_BEST_DISCOUNTS_SUCCESS: // loading has successfully finished
+		case LOAD_DISCOUNTS_SUCCESS: // loading has successfully finished
 			return {
 				...state,
 				data: action.payload.data.map(transformDiscountData),
 				error: null,
 				loading: false
 			};
-		case LOAD_BEST_DISCOUNTS_FAILURE: // return error and make loading = false
+		case LOAD_DISCOUNTS_FAILURE: // return error and make loading = false
 			const error = action.payload.data || {
 				message: action.payload.message
 			};

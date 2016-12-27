@@ -1,9 +1,9 @@
 // define smart container
 import { connect } from 'react-redux';
-import { loadCategories, loadCategoriesSuccess, loadCategoriesFailure, resetCategories } from '../actions/categories';
+import { loadCategories, loadCategoriesSuccess, loadCategoriesFailure } from '../actions/categories';
 
 // load dump component
-import data from '../components/CategoryTree';
+import CategoryTree from '../components/CategoryTree';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -33,4 +33,4 @@ function mapStateToProps({categories}, {categoryPath}) {
 	};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(data);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryTree);

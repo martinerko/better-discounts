@@ -1,34 +1,37 @@
 import axios from 'axios';
 
-export const LOAD_BEST_DISCOUNTS = 'LOAD_BEST_DISCOUNTS';
-export const LOAD_BEST_DISCOUNTS_SUCCESS = 'LOAD_BEST_DISCOUNTS_SUCCESS';
-export const LOAD_BEST_DISCOUNTS_FAILURE = 'LOAD_BEST_DISCOUNTS_FAILURE';
+export const LOAD_DISCOUNTS = 'LOAD_DISCOUNTS';
+export const LOAD_DISCOUNTS_SUCCESS = 'LOAD_DISCOUNTS_SUCCESS';
+export const LOAD_DISCOUNTS_FAILURE = 'LOAD_DISCOUNTS_FAILURE';
 
-export function loadBestDiscounts() {
-	const svc = 'http://localhost:3333/api/discounts';
+export function loadDiscounts(categoryPath = []) {
 	const columns = 'percentage,m,n,p1,category_seo_token,t,p,s';
 
-	const request = axios({
-		method: 'get',
-		url: `${svc}?gt(percentage,50)&select(${columns})&sort(-percentage)&limit(10)`
-	});
+	let q = ['gt(percentage,50)'];
+	if (categoryPath.length) {
+		const seoTokens = encodeURIComponent(`${categoryPath.join('/')}`);
+		q.push(`eq(seoTokens,${seoTokens})`);
+	}
+	q.push(`select(${columns})`, 'sort(-percentage)', 'limit(10)');
+
+	const url = `http://localhost:3333/api/discounts?${q.join('&')}`;
 
 	return {
-		type: LOAD_BEST_DISCOUNTS,
-		payload: request
+		type: LOAD_DISCOUNTS,
+		payload: axios(url)
 	};
 }
 
-export function loadBestDiscountsSuccess(data) {
+export function loadDiscountsSuccess(data) {
 	return {
-		type: LOAD_BEST_DISCOUNTS_SUCCESS,
+		type: LOAD_DISCOUNTS_SUCCESS,
 		payload: data
 	};
 }
 
-export function loadBestDiscountsFailure(error) {
+export function loadDiscountsFailure(error) {
 	return {
-		type: LOAD_BEST_DISCOUNTS_FAILURE,
+		type: LOAD_DISCOUNTS_FAILURE,
 		payload: error
 	};
 }
