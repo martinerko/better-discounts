@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AppContainer from '../containers/AppContainer';
 import HeaderContainer from '../containers/HeaderContainer';
-import CategoryTreeContainer from '../containers/CategoryTreeContainer';
+import LeftMenuContainer from '../containers/LeftMenuContainer';
 
 export default class App extends Component {
 	static propTypes = {
@@ -19,7 +19,7 @@ export default class App extends Component {
 			<AppContainer>
 				<nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
 					<HeaderContainer />
-					<CategoryTreeContainer categoryPath={this.resolveCategoryPath()} />
+					<LeftMenuContainer categoryPath={this.resolveCategoryPath()} />
 				</nav>
 				<div id="page-wrapper">
 					<div className="container-fluid">

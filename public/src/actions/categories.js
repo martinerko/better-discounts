@@ -5,8 +5,8 @@ export const LOAD_CATEGORIES_SUCCESS = 'LOAD_CATEGORIES_SUCCESS';
 export const LOAD_CATEGORIES_FAILURE = 'LOAD_CATEGORIES_FAILURE';
 export const RESET_CATEGORIES = 'RESET_CATEGORIES';
 
-export function loadCategories(categoryPath = []) {
-	let q = ['gt(percentage,50)', `eq(level,${categoryPath.length + 1})`];
+export function loadCategories(categoryPath = [], percentage) {
+	let q = [`gt(percentage,${percentage})`, `eq(level,${categoryPath.length + 1})`];
 	if (categoryPath.length) {
 		const seoTokens = encodeURIComponent(`${categoryPath.join('/')}`);
 		q.push(`eq(seoTokens,${seoTokens})`);

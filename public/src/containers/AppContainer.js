@@ -38,7 +38,6 @@ function mapStateToProps(state, ownProps) {
 	const {filter} = state;
 
 	return {
-		seoTokens: [],
 		filter
 	};
 }

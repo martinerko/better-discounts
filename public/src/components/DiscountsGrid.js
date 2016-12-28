@@ -3,7 +3,8 @@ import Discount from './Discount';
 
 export default class BestDiscounts extends Component {
 	static propTypes = {
-		categoryPath: PropTypes.array,
+		categoryPath: PropTypes.array.isRequired,
+		percentage: PropTypes.number.isRequired,
 		loadDiscounts: PropTypes.func,
 		data: PropTypes.array,
 		loading: PropTypes.bool,
@@ -11,8 +12,8 @@ export default class BestDiscounts extends Component {
 	};
 
 	loadData() {
-		const {categoryPath, loadDiscounts} = this.props;
-		loadDiscounts(categoryPath);
+		const {categoryPath, loadDiscounts, percentage} = this.props;
+		loadDiscounts(categoryPath, percentage);
 	}
 
 	componentWillMount() {
@@ -20,8 +21,12 @@ export default class BestDiscounts extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		// make sure to reload categories when the url has changed
+		// make sure to reload categories when:
+		// ...the url has changed
 		if (this.props.categoryPath !== prevProps.categoryPath) {
+			this.loadData();
+		// ...the percentage filter has changed
+		} else if (this.props.percentage !== prevProps.percentage) {
 			this.loadData();
 		}
 	}

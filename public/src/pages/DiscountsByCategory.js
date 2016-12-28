@@ -12,8 +12,6 @@ export default class DiscountsByCategory extends Component {
 	}
 
 	render() {
-		return (
-			<DiscountsGridContainer categoryPath={this.resolveCategoryPath()} />
-			);
+		return <DiscountsGridContainer categoryPath={this.resolveCategoryPath()} />;
 	}
 }

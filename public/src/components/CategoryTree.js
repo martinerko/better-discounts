@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 
 export default class CategoryTree extends Component {
 	static propTypes = {
-		categoryPath: PropTypes.array,
+		categoryPath: PropTypes.array.isRequired,
+		percentage: PropTypes.number.isRequired,
 		loadCategories: PropTypes.func.isRequired,
 		categoryChildren: PropTypes.array,
 		categoryDetail: PropTypes.object,
@@ -12,8 +13,8 @@ export default class CategoryTree extends Component {
 	};
 
 	loadData() {
-		const {categoryPath, loadCategories} = this.props;
-		loadCategories(categoryPath);
+		const {categoryPath, loadCategories, percentage} = this.props;
+		loadCategories(categoryPath, percentage);
 	}
 
 	componentWillMount() {
@@ -21,20 +22,20 @@ export default class CategoryTree extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		// make sure to reload categories when the url has changed
+		// make sure to reload categories when:
+		// ...the url has changed
 		if (this.props.categoryPath !== prevProps.categoryPath) {
 			this.loadData();
+		// ...the percentage filter has changed
+		} else if (this.props.percentage !== prevProps.percentage) {
+			this.loadData();
 		}
-	}
-
-	handleCategoryClick(e) {
-		e.preventDefault();
 	}
 
 	renderDetail() {
 		const {loading, error, categoryChildren} = this.props;
 		if (loading) {
-			return 'Loading category tree';
+			return <div>Loading category tre</div>;
 		} else if (error) {
 			return (
 				<div style={{ color: 'red' }}>
@@ -62,21 +63,20 @@ export default class CategoryTree extends Component {
 		const parentCategory = categoryPath.slice(0, -1).join('/');
 		return (
 			<li key={'cat' + categoryId}>
-				<Link to={parentCategory ? `/category/${parentCategory}` : '/'} style={{ display: 'inline' }}>
-				<i className="fa fa-fw fa-arrow-left" />
-				</Link>
-				<b style={{ color: '#fff' }}>{name}</b>
+					<Link to={parentCategory ? `/category/${parentCategory}` : '/'} style={{ }} >
+					<i className="fa fa-fw fa-arrow-left" />
+					<b style={{ color: '#fff' }}>{name}</b>
+					</Link>
 			</li>
 			);
 	}
 
 	renderCategories() {
 		const {categoryPath, categoryChildren} = this.props;
-		const renderLink = categoryPath.length < 2;
+		const renderLink = categoryPath.length < 3;
 		return categoryChildren.map(({name, seoToken, categoryId}) => {
 			if (renderLink) {
 				const tokens = categoryPath.concat(seoToken);
-
 				return (
 					<li key={'cat' + categoryId}>
 						<Link to={'/category/' + tokens.join('/')}>
@@ -88,8 +88,10 @@ export default class CategoryTree extends Component {
 			} else {
 				return (
 					<li key={'cat' + categoryId}>
-						<i className="fa fa-fw fa-dashboard" />
-						{name}
+						<div className="link">
+							<i className="fa fa-fw fa-dashboard" />
+							{name}
+						</div>
 					</li>
 					);
 			}
@@ -97,10 +99,6 @@ export default class CategoryTree extends Component {
 	}
 
 	render() {
-		return (
-			<div className="collapse navbar-collapse navbar-ex1-collapse">
-				{this.renderDetail()}
-			</div>
-			);
+		return this.renderDetail();
 	}
 }

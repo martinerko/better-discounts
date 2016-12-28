@@ -7,9 +7,9 @@ import DiscountsGrid from '../components/DiscountsGrid';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadDiscounts: (seoTokens = []) => {
+		loadDiscounts: (seoTokens = [], percentage) => {
 			// load top discounts to display
-			dispatch(loadDiscounts(seoTokens))
+			dispatch(loadDiscounts(seoTokens, percentage))
 				.then((response) => {
 					if (!response.error) {
 						dispatch(loadDiscountsSuccess(response.payload));
@@ -22,13 +22,14 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 function mapStateToProps({discounts}, {categoryPath}) {
-	const {loading, data, error} = discounts;
+	const {loading, data, error, percentage} = discounts;
 
 	return {
 		error,
 		loading,
 		data,
-		categoryPath
+		categoryPath,
+		percentage
 	};
 }
 

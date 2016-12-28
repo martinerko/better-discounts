@@ -1,9 +1,10 @@
-import { LOAD_DISCOUNTS, LOAD_DISCOUNTS_SUCCESS, LOAD_DISCOUNTS_FAILURE } from '../actions/discounts';
+import { LOAD_DISCOUNTS, LOAD_DISCOUNTS_SUCCESS, LOAD_DISCOUNTS_FAILURE, SET_DISCOUNTS_PERCENTAGE } from '../actions/discounts';
 
 const INITIAL_STATE = {
 	data: null,
 	error: null,
-	loading: false
+	loading: false,
+	percentage: 50
 };
 
 function transformDiscountData({p: code, m: manufacturer, n: name, percentage, p1: price, t, s}) {
@@ -45,6 +46,11 @@ export default function(state = INITIAL_STATE, action) {
 				data: null,
 				error: error,
 				loading: false
+			};
+		case SET_DISCOUNTS_PERCENTAGE:
+			return {
+				...state,
+				percentage: action.percentage
 			};
 		default:
 			return state;
