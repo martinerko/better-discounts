@@ -34,7 +34,7 @@ export default class BestDiscounts extends Component {
 	renderDetail() {
 		const {loading, error, data} = this.props;
 		if (loading) {
-			return 'Loading';
+			return <div>Loading...</div>;
 		} else if (error) {
 			return <div style={{ color: 'red' }}>
 											{error.message}
@@ -47,9 +47,13 @@ export default class BestDiscounts extends Component {
 	}
 
 	renderDiscounts() {
+		const {data} = this.props;
+		if (!data.length) {
+			return <div>No discounts found</div>
+		}
 		return this.props.data.map((discount, i) => {
 			return (
-				<div className="col-sm-4 col-lg-4 col-md-4" key={discount.code + '_' + i}>
+				<div className="col-sm-3 col-lg-3 col-md-3" key={discount.code + '_' + i}>
 					<Discount detail={discount} />
 				</div>
 				);

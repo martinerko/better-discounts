@@ -32,7 +32,7 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="left-menu">
 				{this.renderSlider()}
 				<div className="collapse navbar-collapse navbar-ex1-collapse">
 					<CategoryTree {...this.props} />

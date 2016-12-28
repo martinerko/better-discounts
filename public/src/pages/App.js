@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import AppContainer from '../containers/AppContainer';
 import HeaderContainer from '../containers/HeaderContainer';
 import LeftMenuContainer from '../containers/LeftMenuContainer';
+import Loader from '../containers/LoaderContainer';
 
 export default class App extends Component {
 	static propTypes = {
@@ -17,6 +18,7 @@ export default class App extends Component {
 	render() {
 		return (
 			<AppContainer>
+				<Loader />
 				<nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
 					<HeaderContainer />
 					<LeftMenuContainer categoryPath={this.resolveCategoryPath()} />

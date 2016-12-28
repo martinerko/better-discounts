@@ -9,23 +9,6 @@ export default class Header extends Component {
 		error: PropTypes.object
 	};
 
-	// renderLocationDetails() {
-	//   const { loading, error, location } = this.props;
-	//   if (loading) {
-	//     return 'Loading';
-	//   } else if (error) {
-	//     return <div style={{
-	//         color: 'red'
-	//       }}>{ error.message }</div>;
-	//   } else if (location) {
-	//     return (
-	//       <div>{location.city} {location.country}</div>
-	//     );
-	//   } else {
-	//     return (<div>Unknown location</div>);
-	//   }
-	// }
-
 	render() {
 		return (
 			<div>

@@ -35,7 +35,7 @@ export default class CategoryTree extends Component {
 	renderDetail() {
 		const {loading, error, categoryChildren} = this.props;
 		if (loading) {
-			return <div>Loading category tre</div>;
+			return <div>Loading...</div>;
 		} else if (error) {
 			return (
 				<div style={{ color: 'red' }}>

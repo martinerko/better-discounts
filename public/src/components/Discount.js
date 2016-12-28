@@ -10,15 +10,15 @@ export default class Discount extends Component {
 
 		return (
 			<div className="thumbnail">
+				<div className="caption">
+					<small>{manufacturer}</small>
+					<h4><a href={link} target="_blank">{name}</a>
+												</h4>
+				</div>
 				<a href={link} target="_blank">
 					<img src={thumbnail} alt={manufacturer + ' - ' + name} />
 				</a>
-				<div className="caption">
-					<h4 className="pull-right">${priceNew} (-{percentage}%)</h4>
-					<h4><a href={link} target="_blank">{name}</a>
-									</h4>
-					<small>{manufacturer} {code}</small>
-				</div>
+				<h4 className="pull-right">${priceNew} (-{percentage}%)</h4>
 			</div>
 			);
 	}

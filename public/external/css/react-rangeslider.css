@@ -72,10 +72,8 @@
 
 .percentage{
   position: fixed;
-  top: 60px;
-  left: 17px;
-
-	padding:5px 0;
+  top: 50px;
+	padding:5px 0 5px 17px;
 }
 
 .percentage>span{

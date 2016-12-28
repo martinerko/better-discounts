@@ -12,7 +12,9 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(loadDiscounts(seoTokens, percentage))
 				.then((response) => {
 					if (!response.error) {
-						dispatch(loadDiscountsSuccess(response.payload));
+						setTimeout(function() {
+							dispatch(loadDiscountsSuccess(response.payload));
+						}, 1000);
 					} else {
 						dispatch(loadDiscountsFailure(response.payload));
 					}
