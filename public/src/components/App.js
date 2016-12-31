@@ -9,7 +9,7 @@ export default class App extends Component {
 	};
 
 	componentWillMount() {
-		this.props.authenticateUser();
+		// this.props.authenticateUser();
 		this.props.loadUserLocation();
 	}
 

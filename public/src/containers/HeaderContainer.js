@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-function mapStateToProps({users}) {
-	const {loading, location, error} = users;
+function mapStateToProps({authentication}) {
+	const {isAuthenticated, isAdmin, profile} = authentication;
 
 	return {
-		error,
-		loading,
-		location
+		isAuthenticated,
+		isAdmin,
+		profile
 	};
 }
 

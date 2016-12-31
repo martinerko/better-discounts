@@ -3,6 +3,7 @@ import AppContainer from '../containers/AppContainer';
 import HeaderContainer from '../containers/HeaderContainer';
 import LeftMenuContainer from '../containers/LeftMenuContainer';
 import Loader from '../containers/LoaderContainer';
+import AuthenticationFormContainer from '../containers/AuthenticationFormContainer';
 
 export default class App extends Component {
 	static propTypes = {
@@ -28,6 +29,7 @@ export default class App extends Component {
 						{this.props.children}
 					</div>
 				</div>
+				<AuthenticationFormContainer />
 			</AppContainer>
 			);
 	}
