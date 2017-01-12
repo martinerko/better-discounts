@@ -4,7 +4,7 @@ import discountsReducer from './discounts';
 import categoriesReducer from './categories';
 import personalizedReducer from './personalized';
 import authenticationReducer from './authentication';
-
+import { reducer as form } from 'redux-form';
 import { routerReducer as routing } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -13,8 +13,9 @@ const rootReducer = combineReducers({
 	categories: categoriesReducer,
 	personalized: personalizedReducer,
 	authentication: authenticationReducer,
+	form,
 	routing
-// somFe additional reducers
+// some additional reducers
 });
 
 export default rootReducer;

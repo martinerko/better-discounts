@@ -2,14 +2,25 @@ export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const AUTHENTICATE_USER_SUCCESS = 'AUTHENTICATE_USER_SUCCESS';
 export const AUTHENTICATE_USER_FAILURE = 'AUTHENTICATE_USER_FAILURE';
 
-export function authenticateUser() {
+export function authenticateUser({email, password}) {
 	// simulate authentication
 	const request = new Promise(
 		function(resolve, reject) {
 			const username = 'martinerko';
-			setTimeout(resolve.bind(null, {
-				username
-			}, 5000));
+			// fake svc call
+			setTimeout(() => {
+				if (~email.indexOf('martinerko')) {
+					resolve({
+						data: {
+							username
+						}
+					});
+				} else {
+					reject({
+						message: 'Email or password is incorrect!'
+					});
+				}
+			}, 3000);
 		});
 
 	return {

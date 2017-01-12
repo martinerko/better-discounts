@@ -22,11 +22,13 @@ export default class Header extends Component {
 	}
 
 	renderMenuForRegisteredUsers() {
+		const {profile} = this.props;
+
 		return (
 			<ul className="nav navbar-right top-nav">
 				<li className="dropdown">
 					<a href="#" className="dropdown-toggle" data-toggle="dropdown">
-						<i className="fa fa-user" /> Logged User <b className="caret" />
+						<i className="fa fa-user" /> {profile.username} <b className="caret" />
 					</a>
 					<ul className="dropdown-menu">
 						<li>
