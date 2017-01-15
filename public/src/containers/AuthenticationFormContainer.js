@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
 				.then((response) => {
 					console.log(response);
 					if (!response.error) {
+						$('#authenticationModal').modal('hide');
 						return dispatch(authenticateUserSuccess(response.payload));
 					} else {
 						// we need to hide loading overlay

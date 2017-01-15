@@ -9,11 +9,16 @@ export default class Header extends Component {
 		error: PropTypes.object
 	};
 
+	showAuthenticationFormClick(e) {
+		e.preventDefault();
+		$('#authenticationModal').modal('show');
+	}
+
 	renderMenuForAnonymousUsers() {
 		return (
 			<ul className="nav navbar-right top-nav">
 				<li>
-					<a href="#" data-toggle="modal" data-target="#authenticationModal">
+					<a href="#login-dialog" onClick={this.showAuthenticationFormClick}>
 						<i className="fa fa-user" /> Login / Register<b className="caret" />
 					</a>
 				</li>
@@ -28,7 +33,8 @@ export default class Header extends Component {
 			<ul className="nav navbar-right top-nav">
 				<li className="dropdown">
 					<a href="#" className="dropdown-toggle" data-toggle="dropdown">
-						<i className="fa fa-user" /> {profile.username} <b className="caret" />
+						<i className="fa fa-user" />
+						{' ' + profile.username} <b className="caret" />
 					</a>
 					<ul className="dropdown-menu">
 						<li>
