@@ -6,12 +6,25 @@ export default class Header extends Component {
 		isAuthenticated: PropTypes.bool,
 		isAdmin: PropTypes.bool,
 		profile: PropTypes.object,
-		error: PropTypes.object
+		error: PropTypes.object,
+		showAuthenticationForm: PropTypes.func.isRequired,
+		logout: PropTypes.func.isRequired
 	};
+
+	constructor(props) {
+		super(props);
+		this.showAuthenticationFormClick = this.showAuthenticationFormClick.bind(this);
+		this.logoutClick = this.logoutClick.bind(this);
+	}
 
 	showAuthenticationFormClick(e) {
 		e.preventDefault();
-		$('#authenticationModal').modal('show');
+		this.props.showAuthenticationForm();
+	}
+
+	logoutClick(e) {
+		e.preventDefault();
+		this.props.logout();
 	}
 
 	renderMenuForAnonymousUsers() {
@@ -34,7 +47,7 @@ export default class Header extends Component {
 				<li className="dropdown">
 					<a href="#" className="dropdown-toggle" data-toggle="dropdown">
 						<i className="fa fa-user" />
-						{' ' + profile.username} <b className="caret" />
+						{' ' + profile.name} <b className="caret" />
 					</a>
 					<ul className="dropdown-menu">
 						<li>
@@ -48,16 +61,15 @@ export default class Header extends Component {
 						</li>
 						<li className="divider" />
 						<li>
-							<a href="#"><i className="fa fa-fw fa-power-off" /> Log Out</a>
+							<a href="#" onClick={this.logoutClick}><i className="fa fa-fw fa-power-off" /> Log Out</a>
 						</li>
 					</ul>
 				</li>
-			</ul>
-			);
+			</ul>);
 	}
 
 	render() {
-		const {isAuthenticated, isAdmin} = this.props;
+		const {isAuthenticated} = this.props;
 		return (
 			<div>
 				<div className="navbar-header">

@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm, propTypes as reduxFormPropTypes } from 'redux-form';
 import renderField from './renderField';
+import validateData from '../../../shared/validations/signin';
 
 class LoginForm extends Component {
 	static propTypes = {
 		signInUser: PropTypes.func.isRequired,
 		// props added by redux-form decorator
 		...reduxFormPropTypes
-	// handleSubmit: PropTypes.func,
-	// submitting: PropTypes.bool
 	};
 
 	constructor(props) {
@@ -55,18 +54,12 @@ class LoginForm extends Component {
 	}
 }
 
-const validate = (values) => {
-	const errors = {};
-	let hasErrors = false;
-	if (!values.email || values.email.trim() === '') {
-		errors.email = 'Enter email';
-		hasErrors = true;
-	}
-	if (!values.password || values.password.trim() === '') {
-		errors.password = 'Enter password';
-		hasErrors = true;
-	}
-	return hasErrors && errors;
+const validate = ({email = '', password = ''}) => {
+	const {errors} = validateData({
+		email,
+		password
+	});
+	return errors;
 };
 
 // Decorate the form component

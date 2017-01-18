@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
 				.then((response) => {
 					if (!response.error) {
 						// setTimeout(function() {
-							dispatch(loadDiscountsSuccess(response.payload));
+						dispatch(loadDiscountsSuccess(response.payload));
 						// }, 1000);
 					} else {
 						dispatch(loadDiscountsFailure(response.payload));

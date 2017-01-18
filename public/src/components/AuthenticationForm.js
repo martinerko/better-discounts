@@ -56,7 +56,9 @@ class AuthenticationForm extends Component {
 						<li><span className="fa fa-check text-success" />Get instant notifications to your email</li>
 					</ul>
 					<p>
-						<a href="#registration-form" data-toggle="tab" className="btn btn-info btn-block" onClick={this.showRegistrationFormClick}>Yes please, register now!</a>
+						<a href="#registration-form" data-toggle="tab"
+							className="btn btn-info btn-block"
+							onClick={this.showRegistrationFormClick}>Yes please, register now!</a>
 					</p>
 				</div>
 			</div>);

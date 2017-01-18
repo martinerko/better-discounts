@@ -1,30 +1,58 @@
 import { connect } from 'react-redux';
+import { reset, SubmissionError } from 'redux-form';
 import AuthenticationForm from '../components/AuthenticationForm';
-import { authenticateUser, authenticateUserSuccess, authenticateUserFailure } from '../actions/authentication';
-import { SubmissionError } from 'redux-form';
+import { authenticateUser, authenticateUserSuccess, authenticateUserFailure, logout } from '../actions/authentication';
+import { signUpUser, signUpUserFailure } from '../actions/signup';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		signInUser: (values) => {
 			return dispatch(authenticateUser(values))
-				.then((response) => {
-					console.log(response);
-					if (!response.error) {
+				.then(({payload, error = false}) => {
+					if (!error) {
+						// reset our form
+						dispatch(reset('LoginForm'));
+						// hide modal window
 						$('#authenticationModal').modal('hide');
-						return dispatch(authenticateUserSuccess(response.payload));
+						// once the user has been registered, we automatically sign in him
+						return dispatch(authenticateUserSuccess(payload.data));
 					} else {
-						// we need to hide loading overlay
-						dispatch(authenticateUserFailure(response.payload));
+						// calling this we make sure that we hide loading overlay
+						dispatch(authenticateUserFailure(payload.response));
 						// and reject onSubmit function + display the error message
-						throw new SubmissionError({
-							_error: response.payload.message
-						});
+						const {message = null, validation = {}} = payload.response.data;
+						if (validation) {
+							throw new SubmissionError({
+								_error: message, // error message
+								...validation // validation error related to fields
+							});
+						}
 					}
 				});
 		},
 		registerUser: (values) => {
-			// TODO
-			console.log(values);
+			return dispatch(signUpUser(values))
+				.then(({payload, error = false}) => {
+					if (!error) {
+						// reset our form
+						dispatch(reset('RegistrationForm'));
+						// hide modal window
+						$('#authenticationModal').modal('hide');
+						// once the user has been registered, we automatically sign in him
+						return dispatch(authenticateUserSuccess(payload.data));
+					} else {
+						// calling this we make sure that we hide loading overlay
+						dispatch(signUpUserFailure(payload.response));
+						// and reject onSubmit function + display the error message
+						const {message = null, validation = {}} = payload.response.data;
+						if (validation) {
+							throw new SubmissionError({
+								_error: message, // error message
+								...validation // validation error related to fields
+							});
+						}
+					}
+				});
 		}
 	};
 };

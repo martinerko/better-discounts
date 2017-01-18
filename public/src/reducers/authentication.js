@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER, AUTHENTICATE_USER_SUCCESS, AUTHENTICATE_USER_FAILURE } from '../actions/authentication';
+import { AUTHENTICATE_USER, AUTHENTICATE_USER_SUCCESS, AUTHENTICATE_USER_FAILURE, LOGOUT } from '../actions/authentication';
 
 const INITIAL_STATE = {
 	isAdmin: false,
@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
 	switch (action.type) {
-		// loading best discounts from external service
 		case AUTHENTICATE_USER:
 			return {
 				...state,
@@ -18,11 +17,13 @@ export default function(state = INITIAL_STATE, action) {
 				error: null,
 				loading: true
 			};
-		case AUTHENTICATE_USER_SUCCESS: // loading has successfully finished
+		case AUTHENTICATE_USER_SUCCESS:
+			const {data} = action.payload;
 			return {
 				...state,
 				isAuthenticated: true,
-				profile: action.payload.data,
+				isAdmin: data.admin,
+				profile: data,
 				error: null,
 				loading: false
 			};
@@ -35,6 +36,11 @@ export default function(state = INITIAL_STATE, action) {
 				isAuthenticated: false,
 				error: error,
 				loading: false
+			};
+		case LOGOUT:
+			return {
+				...state,
+				...INITIAL_STATE
 			};
 		default:
 			return state;
