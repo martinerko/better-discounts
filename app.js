@@ -1,24 +1,31 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const webpack = require('webpack');
-const config = require('./webpack.config.dev');
+const webpackConfig = require('./webpack.config.dev');
+const appConfig = require('./config');
 
 const STATIC_PATH = 'public';
-const PORT = 7777;
+const SERVER_PORT = appConfig.app.SERVER_PORT;
 
 const app = express();
-const compiler = webpack(config);
+const compiler = webpack(webpackConfig);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended: false
+}));
 
 app.use(require('webpack-dev-middleware')(compiler, {
 	noInfo: true,
-	publicPath: config.output.publicPath
+	publicPath: webpackConfig.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
 
 // routes
-app.use('/api/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 
 app.use(express.static(STATIC_PATH));
 
@@ -29,11 +36,11 @@ app.get('/*', (req, res) => {
 // connect to Mongo when the app initializes
 mongoose.connect('mongodb://localhost/coles');
 
-app.listen(PORT, 'localhost', (err) => {
+app.listen(SERVER_PORT, 'localhost', (err) => {
 	if (err) {
 		console.log(err);
 		return;
 	}
 
-	console.log(`Listening at http://localhost:${PORT}`);
+	console.log(`Listening at http://localhost:${SERVER_PORT}`);
 });

@@ -1,14 +1,10 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const JWT_SECRET = process.env.JWT_SECRET || require('../config').jwt.SECRET;
 
-function isUserUnique(reqBody, cb) {
-	const {username, email} = reqBody;
-
+function isUserUnique({email}, cb) {
 	User.findOne({
-		$or: [{
-			'username': new RegExp(`^${username.trim()}$`, 'i')
-		}, {
-			'email': new RegExp(`^${email.trim()}$`, 'i')
-		}]
+		'email': email.toLowerCase()
 	}, (err = null, user) => {
 		if (err) {
 			throw err;
@@ -19,23 +15,24 @@ function isUserUnique(reqBody, cb) {
 			return;
 		}
 
-		err = null;
-		if (user.username === username) {
-			err = {
-				'username': `username "${username}" is already registered`
-			};
-		}
-		if (user.email === email) {
-			err = err || {};
-			err = {
-				'email': `email "${username}" is already registered`
-			};
-		}
-
-		cb(err);
+		cb({
+			'message': `Email address "${email}" is already registered.`
+		});
 	});
 }
 
+function generateJwtToken(user) {
+	var u = {
+		_id: user.get('_id').toString(),
+		name: user.get('name'),
+		email: user.get('email'),
+		admin: user.get('admin')
+	};
+
+	return jwt.sign(u, JWT_SECRET);
+}
+
 module.exports = {
-	isUserUnique: isUserUnique
+	isUserUnique: isUserUnique,
+	generateJwtToken: generateJwtToken
 };
