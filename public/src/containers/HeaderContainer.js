@@ -3,11 +3,10 @@ import Header from '../components/Header';
 import { logout } from '../actions/authentication';
 
 function mapStateToProps({authentication}) {
-	const {isAuthenticated, isAdmin, profile} = authentication;
+	const {isAuthenticated, profile} = authentication;
 
 	return {
 		isAuthenticated,
-		isAdmin,
 		profile
 	};
 }

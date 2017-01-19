@@ -1,7 +1,7 @@
-import { AUTHENTICATE_USER, AUTHENTICATE_USER_SUCCESS, AUTHENTICATE_USER_FAILURE, LOGOUT } from '../actions/authentication';
+import isEmpty from 'lodash.isempty'
+import { AUTHENTICATE_USER, SET_CURRENT_USER, AUTHENTICATE_USER_FAILURE } from '../actions/authentication';
 
 const INITIAL_STATE = {
-	isAdmin: false,
 	isAuthenticated: false,
 	profile: null,
 	error: null,
@@ -17,13 +17,12 @@ export default function(state = INITIAL_STATE, action) {
 				error: null,
 				loading: true
 			};
-		case AUTHENTICATE_USER_SUCCESS:
-			const {data} = action.payload;
+		case SET_CURRENT_USER:
+			const user = action.payload.data || {};
 			return {
 				...state,
-				isAuthenticated: true,
-				isAdmin: data.admin,
-				profile: data,
+				isAuthenticated: !isEmpty(user),
+				profile: user,
 				error: null,
 				loading: false
 			};
@@ -32,15 +31,8 @@ export default function(state = INITIAL_STATE, action) {
 				message: action.payload.message
 			};
 			return {
-				...state,
-				isAuthenticated: false,
-				error: error,
-				loading: false
-			};
-		case LOGOUT:
-			return {
-				...state,
-				...INITIAL_STATE
+				...INITIAL_STATE,
+				error
 			};
 		default:
 			return state;

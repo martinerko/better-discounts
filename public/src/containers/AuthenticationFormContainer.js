@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { reset, SubmissionError } from 'redux-form';
 import AuthenticationForm from '../components/AuthenticationForm';
-import { authenticateUser, authenticateUserSuccess, authenticateUserFailure, logout } from '../actions/authentication';
+import { authenticateUser, authenticateUserSuccess, authenticateUserFailure } from '../actions/authentication';
 import { signUpUser, signUpUserFailure } from '../actions/signup';
 
 const mapDispatchToProps = (dispatch) => {
@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 						dispatch(reset('LoginForm'));
 						// hide modal window
 						$('#authenticationModal').modal('hide');
-						// once the user has been registered, we automatically sign in him
+						// inform others that user was signed in
 						return dispatch(authenticateUserSuccess(payload.data));
 					} else {
 						// calling this we make sure that we hide loading overlay
@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch) => {
 						dispatch(reset('RegistrationForm'));
 						// hide modal window
 						$('#authenticationModal').modal('hide');
-						// once the user has been registered, we automatically sign in him
+						// once the user has been registered, inform others that he is here!
 						return dispatch(authenticateUserSuccess(payload.data));
 					} else {
 						// calling this we make sure that we hide loading overlay
