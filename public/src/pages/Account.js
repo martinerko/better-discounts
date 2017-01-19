@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import AccountContainer from '../containers/AccountContainer';
 
 export default class Account extends Component {
 	static propTypes = {
@@ -7,10 +8,10 @@ export default class Account extends Component {
 
 	render() {
 		return (
-			<div>Account
-				{' '}
-				{this.props.params.userID || 'no user'}
+			<div>
+				<h2>Your Profile Details</h2>
+				<AccountContainer />
 			</div>
-			);
+		);
 	}
 }

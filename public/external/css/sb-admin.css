@@ -255,3 +255,7 @@ ul.alert-dropdown {
 	background: #333 url('http://files.mimoymima.com/images/loading.gif') no-repeat center center;
 	opacity: 0.9;
 }
+
+.control-label{
+  min-width: 120px;
+}

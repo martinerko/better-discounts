@@ -51,7 +51,7 @@ export default class Header extends Component {
 					</a>
 					<ul className="dropdown-menu">
 						<li>
-							<a href="#"><i className="fa fa-fw fa-user" /> Profile</a>
+							<Link to="/account"><i className="fa fa-fw fa-user" /> My Account</Link>
 						</li>
 						<li>
 							<a href="#"><i className="fa fa-fw fa-envelope" /> Inbox</a>
