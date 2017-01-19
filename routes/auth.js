@@ -1,14 +1,16 @@
 const validateSignupData = require('../shared/validations/signup');
 const validateSigninData = require('../shared/validations/signin');
+const validateChangePasswordData = require('../shared/validations/changePassword');
+const authMiddleware = require('../middlewares/auth');
 const bcrypt = require('bcrypt');
 const express = require('express');
-//const expressJwt = require('express-jwt');
+// const expressJwt = require('express-jwt');
 const User = require('../models/User');
 const {isUserUnique, generateJwtToken} = require('../utils/auth');
 
 const SALT_ROUND = 10;
-//const utils = require('../utils/index');
-//const email = require('../utils/email');
+// const utils = require('../utils/index');
+// const email = require('../utils/email');
 const router = express.Router();
 
 router.post('/signin', (req, res) => {
@@ -134,16 +136,67 @@ router.post('/signup', (req, res) => {
 	});
 });
 
-//
-// 	const hash = bcrypt.hashSync(password.trim(), SALT_ROUND);
-// 	const user = new User({
-// 		name: name.trim(),
-// 		email: email.trim(),
-// 		password: hash,
-// 		admin: false,
-// 		verified: false
-// 	});
-//
+router.post('/change-password', authMiddleware, (req, res) => {
+	let {currentPassword = '', newPassword = '', newPassword2} = (req.body.data || {});
+
+	const passwords = {
+		currentPassword: currentPassword.trim(),
+		newPassword: newPassword.trim(),
+		newPassword2: newPassword2.trim()
+	};
+
+	// check if signin form is valid
+	const {isValid, errors} = validateChangePasswordData(passwords);
+
+	if (!isValid) {
+		return res.status(422).json({
+			validation: errors
+		});
+	}
+
+	User
+		.findOne({
+			_id: req.currentUser._id
+		})
+		.select({
+			_id: 1,
+			password: 1
+		})
+		.exec((err, user) => {
+			if (err) {
+				throw err;
+			}
+
+			// we don't have to do verification whether user exists, since we are behind auth. middleware
+
+			// compare received password and original password in the db
+			bcrypt.compare(passwords.currentPassword, user.get('password'), (err, valid) => {
+				if (err) {
+					throw err;
+				}
+
+				if (!valid) {
+					return res.status(403).json({
+						message: 'Your old password is incorrect.',
+						validation: true // make sure this error will be displayed in the form
+					});
+				}
+
+				const newPasswordDigest = bcrypt.hashSync(newPassword, SALT_ROUND);
+				User.findOneAndUpdate({
+					_id: req.currentUser._id
+				}, {
+					password: newPasswordDigest
+				}, function(err, doc) {
+					if (err) {
+						throw err;
+					}
+					return res.status(200).json({});
+				});
+			});
+		});
+});
+
 // 	user.save((err, user) => {
 // 		if (err) {
 // 			throw err;

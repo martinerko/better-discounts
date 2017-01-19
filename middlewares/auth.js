@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
 		jwt.verify(token, JWT_SECRET, (err, {_id}) => {
 			if (err) {
 				res.status(401).json({
-					error: 'Failed to authenticate'
+					error: 'Failed to authenticate.'
 				});
 			} else {
 				User
@@ -38,9 +38,8 @@ module.exports = function(req, res, next) {
 								message: 'Incorrect credentials.'
 							});
 						}
-						req.currentUser = user;
+						req.currentUser = user.toJSON();
 						next();
-
 					});
 			}
 		});

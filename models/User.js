@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const timestamps = require('mongoose-timestamp');
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -29,4 +29,4 @@ const userSchema = mongoose.Schema({
 
 userSchema.plugin(timestamps);
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', !mongoose.models.User ? userSchema : null);
