@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post('/signin', (req, res) => {
 	let {email = '', password = ''} = (req.body.data || {});
-	email = email.trim();
+	email = email.trim().toLowerCase();
 	password = password.trim();
 
 	// check if signin form is valid
@@ -33,13 +33,6 @@ router.post('/signin', (req, res) => {
 	User
 		.findOne({
 			email
-		})
-		.select({
-			_id: 1,
-			name: 1,
-			email: 1,
-			admin: 1,
-			verified: 1
 		})
 		.exec((err, user) => {
 			if (err) {
@@ -65,15 +58,9 @@ router.post('/signin', (req, res) => {
 					});
 				}
 
-				const token = generateJwtToken(user);
-
+				const token = generateJwtToken(user.toJSON());
 				return res.status(200).json({
-					token,
-					user: {
-						admin: user.get('admin'),
-						email: user.get('email'),
-						name: user.get('name')
-					}
+					token
 				});
 			});
 		});
@@ -82,15 +69,18 @@ router.post('/signin', (req, res) => {
 router.post('/signup', (req, res) => {
 	let {name = '', email = '', password = '', password2 = ''} = (req.body.data || {});
 
-	const user = {
-		name: name.trim(),
-		email: email.trim(),
-		password: password.trim(),
-		password2: password2.trim()
-	};
+	name = name.trim();
+	email = email.trim().toLowerCase();
+	password = password.trim();
+	password2 = password2.trim();
 
 	// check if user form is valid
-	const {isValid, errors} = validateSignupData(user);
+	const {isValid, errors} = validateSignupData({
+		name,
+		email,
+		password,
+		password2
+	});
 
 	if (!isValid) {
 		return res.status(422).json({
@@ -109,11 +99,10 @@ router.post('/signup', (req, res) => {
 			});
 		}
 
-		const passwordDigest = bcrypt.hashSync(password.trim(), SALT_ROUND);
+		const passwordDigest = bcrypt.hashSync(password, SALT_ROUND);
 		const user = new User({
-			admin: false,
-			name: name.trim(),
-			email: email.trim(),
+			name,
+			email,
 			password: passwordDigest
 		});
 
@@ -125,19 +114,14 @@ router.post('/signup', (req, res) => {
 			const token = generateJwtToken(user);
 
 			return res.status(200).json({
-				token,
-				user: {
-					admin: user.get('admin'),
-					email: user.get('email'),
-					name: user.get('name')
-				}
+				token
 			});
 		});
 	});
 });
 
 router.post('/change-password', authMiddleware, (req, res) => {
-	let {currentPassword = '', newPassword = '', newPassword2} = (req.body.data || {});
+	let {currentPassword = '', newPassword = '', newPassword2 = ''} = (req.body.data || {});
 
 	const passwords = {
 		currentPassword: currentPassword.trim(),

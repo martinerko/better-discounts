@@ -1,10 +1,11 @@
+const pick = require('lodash.pick');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const JWT_SECRET = process.env.JWT_SECRET || require('../config').jwt.SECRET;
 
 function isUserUnique({email}, cb) {
 	User.findOne({
-		'email': email.toLowerCase()
+		email
 	}, (err = null, user) => {
 		if (err) {
 			throw err;
@@ -21,15 +22,9 @@ function isUserUnique({email}, cb) {
 	});
 }
 
-function generateJwtToken(user) {
-	var u = {
-		_id: user.get('_id').toString(),
-		name: user.get('name'),
-		email: user.get('email'),
-		admin: user.get('admin')
-	};
-
-	return jwt.sign(u, JWT_SECRET);
+function generateJwtToken(data) {
+	const user = pick(data, ['_id', 'name', 'email', 'admin']);
+	return jwt.sign(user, JWT_SECRET);
 }
 
 module.exports = {
