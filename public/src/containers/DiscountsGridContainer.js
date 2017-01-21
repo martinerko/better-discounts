@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 					if (!response.error) {
 						// setTimeout(function() {
 						dispatch(loadDiscountsSuccess(response.payload));
-						// }, 1000);
+					// }, 1000);
 					} else {
 						dispatch(loadDiscountsFailure(response.payload));
 					}
@@ -23,15 +23,19 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-function mapStateToProps({discounts}, {categoryPath}) {
+function mapStateToProps({discounts, authentication, subscriptions}, {categoryPath}) {
 	const {loading, data, error, percentage} = discounts;
+	const {isAuthenticated} = authentication;
+	const {subscribedProducts} = subscriptions;
 
 	return {
 		error,
 		loading,
 		data,
 		categoryPath,
-		percentage
+		percentage,
+		subscribedProducts,
+		isAuthenticated
 	};
 }
 

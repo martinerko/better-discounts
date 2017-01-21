@@ -81,8 +81,7 @@ export default class Header extends Component {
 					</button>
 					<Link to="/" className="navbar-brand">Better Discounts</Link>
 				</div>
-				{isAuthenticated ? this.renderMenuForRegisteredUsers() : this.renderMenuForAnonymousUsers()} }
-			</div>
-			);
+				{isAuthenticated ? this.renderMenuForRegisteredUsers() : this.renderMenuForAnonymousUsers()}
+			</div>);
 	}
 }

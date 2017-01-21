@@ -26,6 +26,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 // routes
 app.use('/auth', require('./routes/auth'));
+app.use('/subscriptions', require('./routes/subscriptions'));
 
 app.use(express.static(STATIC_PATH));
 

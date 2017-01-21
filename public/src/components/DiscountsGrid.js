@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import Discount from './Discount';
 
-export default class BestDiscounts extends Component {
+export default class DiscountsGrid extends Component {
 	static propTypes = {
 		categoryPath: PropTypes.array.isRequired,
 		percentage: PropTypes.number.isRequired,
-		loadDiscounts: PropTypes.func,
+		loadDiscounts: PropTypes.func.isRequired,
+		isAuthenticated: PropTypes.bool.isRequired,
+		subscribedProducts: PropTypes.object.isRequired,
 		data: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.object
@@ -21,7 +23,7 @@ export default class BestDiscounts extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		// make sure to reload categories when:
+		// make sure to reload products in category and also subscribed products when:
 		// ...the url has changed
 		if (this.props.categoryPath !== prevProps.categoryPath) {
 			this.loadData();
@@ -47,16 +49,17 @@ export default class BestDiscounts extends Component {
 	}
 
 	renderDiscounts() {
-		const {data} = this.props;
+		const {data, subscribedProducts, isAuthenticated} = this.props;
 		if (!data.length) {
-			return <div>No discounts found</div>
+			return <div>No discounts found</div>;
 		}
 		return this.props.data.map((discount, i) => {
+			const productCode = discount.code;
+			const isSubscribed = productCode in subscribedProducts;
 			return (
-				<div className="col-sm-3 col-lg-3 col-md-3" key={discount.code + '_' + i}>
-					<Discount detail={discount} />
-				</div>
-				);
+				<div className="col-sm-3 col-lg-3 col-md-3" key={productCode + '_' + i}>
+					<Discount detail={discount} isSubscribed={isSubscribed} isAuthenticated={isAuthenticated} />
+				</div>);
 		});
 	}
 
@@ -64,7 +67,6 @@ export default class BestDiscounts extends Component {
 		return (
 			<div className="row">
 				{this.renderDetail()}
-			</div>
-			);
+			</div>);
 	}
 }

@@ -30,7 +30,6 @@ export default class App extends Component {
 					</div>
 				</div>
 				<AuthenticationFormContainer />
-			</AppContainer>
-			);
+			</AppContainer>);
 	}
 }

@@ -1,4 +1,4 @@
-import isEmpty from 'lodash.isempty'
+import isEmpty from 'lodash.isempty';
 import { AUTHENTICATE_USER, SET_CURRENT_USER, AUTHENTICATE_USER_FAILURE } from '../actions/authentication';
 
 const INITIAL_STATE = {
